@@ -16,5 +16,6 @@ namespace Project.Database.Entities
         public DateTime? ReleaseDate { get; set; }
         public string Series {  get; set; }
         public bool Available { get; set; }
+        public User User { get; set; } = null!;
     }
 }
