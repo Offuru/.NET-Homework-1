@@ -12,8 +12,8 @@ using Project.Database.Context;
 namespace Project.Database.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20240418115232_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240421163712_Migration1")]
+    partial class Migration1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,6 +28,9 @@ namespace Project.Database.Migrations
             modelBuilder.Entity("Project.Database.Entities.Gundam", b =>
                 {
                     b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("AssignedUserId")
                         .HasColumnType("integer");
 
                     b.Property<bool>("Available")
@@ -102,9 +105,7 @@ namespace Project.Database.Migrations
                 {
                     b.HasOne("Project.Database.Entities.User", "User")
                         .WithMany("Gundams")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Id");
 
                     b.Navigation("User");
                 });

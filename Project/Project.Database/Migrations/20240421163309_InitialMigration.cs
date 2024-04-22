@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Project.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,6 +41,7 @@ namespace Project.Database.Migrations
                     ReleaseDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Series = table.Column<string>(type: "text", nullable: false),
                     Available = table.Column<bool>(type: "boolean", nullable: false),
+                    AssignedUserId = table.Column<int>(type: "integer", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DateUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)

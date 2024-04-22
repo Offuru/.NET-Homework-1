@@ -17,7 +17,7 @@ namespace Project.Database.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseNpgsql("Host=localhost;Database=gundam_store;Username=postgres;Password=1q2w3e");
+                .UseNpgsql("Host=localhost;Database=gundams;Username=postgres;Password=1q2w3e");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,7 +30,7 @@ namespace Project.Database.Context
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Gundams)
                 .WithOne(g => g.User)
-                .HasForeignKey(u => u.Id);
+                .HasForeignKey(u => u.Id).OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
