@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core.Services;
 using Project.Database.Dtos.Request;
@@ -6,7 +6,7 @@ using Project.Database.Dtos.Request;
 namespace Project.Api.Controllers
 {
     [Route("api/users")]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseController
     {
         private UsersServices UsersService { get; set; }
 
@@ -15,8 +15,25 @@ namespace Project.Api.Controllers
             UsersService = usersServices;
         }
 
+        [HttpPost("/authorize")]
+        [AllowAnonymous]
+        public IActionResult Register(RegisterRequest payload)
+        {
+            UsersService.Register(payload);
+            return Ok("Registration succesful");
+        }
+
+        [HttpPost("/login")]
+        [AllowAnonymous]
+        public IActionResult Login(LoginRequest payload)
+        {
+            var jwtToken = UsersService.Login(payload);
+            return Ok(new {token = jwtToken});
+        }
+
         [HttpPost]
         [Route("add")]
+        [Authorize]
         public IActionResult Add([FromBody ]AddUserRequest payload)
         {
             UsersService.AddUser(payload);
@@ -25,6 +42,7 @@ namespace Project.Api.Controllers
 
         [HttpGet]
         [Route("{userId}/get-details")]
+        [Authorize(Roles = ("Admin"))]
         public IActionResult GetUserDetails([FromRoute] int userId)
         {
             var result = UsersService.GetUserDetails(userId);

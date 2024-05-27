@@ -25,6 +25,7 @@ namespace Project.Database.Repositories
         public void AddRange(List<User> users)
         {
             dbContext.AddRange(users);
+            SaveChanges();
         }
 
         public User GetById(int id)
@@ -42,6 +43,29 @@ namespace Project.Database.Repositories
         {
             user.DateDeleted = DateTime.UtcNow;
             SaveChanges();
+        }
+
+        public User GetByEmail(string email)
+        {
+            var result = dbContext.Users
+
+                .Where(e => e.Email == email)
+                .Where(e => e.DateDeleted == null)
+
+                .FirstOrDefault();
+
+            return result;
+        }
+
+        public bool ValidateUserId(int userId)
+        {
+            var result = dbContext.Users
+                .Where(e => e.Id == userId)
+                .Where(e => e.DateDeleted == null)
+
+                .Any();
+
+            return result;
         }
     }
 }

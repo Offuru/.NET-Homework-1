@@ -12,6 +12,7 @@ namespace Project.Database.Dtos.Common
         public int Id { get; set; }
         public string Username { get; set; }
         public decimal Balance { get; set; }
+        public Role Role { get; set; }
         public List<Gundam> Gundams { get; set; }
     }
 }

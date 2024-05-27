@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Project.Database.Context;
@@ -11,9 +12,11 @@ using Project.Database.Context;
 namespace Project.Database.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    partial class ProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240527131314_Authentification")]
+    partial class Authentification
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,27 +72,13 @@ namespace Project.Database.Migrations
                     b.ToTable("Gundams");
                 });
 
-            modelBuilder.Entity("Project.Database.Entities.Role", b =>
+            modelBuilder.Entity("Project.Database.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("Project.Database.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
 
                     b.Property<decimal>("Balance")
                         .HasColumnType("numeric");
@@ -133,22 +122,6 @@ namespace Project.Database.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Project.Database.Entities.User", b =>
-                {
-                    b.HasOne("Project.Database.Entities.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("Project.Database.Entities.Role", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Project.Database.Entities.User", b =>

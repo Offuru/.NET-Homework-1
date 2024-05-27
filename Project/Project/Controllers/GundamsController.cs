@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Project.Core.Services;
 using Project.Database.Dtos.Request;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Project.Api.Controllers
 {
     [Route("api/gundams")]
-    public class GundamsController : ControllerBase
+    [Authorize]
+    public class GundamsController : BaseController
     {
         private GundamsServices GundamsServices { get; set; }
 
@@ -16,6 +18,7 @@ namespace Project.Api.Controllers
 
         [HttpPost]
         [Route("add")]
+        [Authorize]
         public IActionResult AddGundam([FromBody] AddGundamRequest payload)
         {
             GundamsServices.AddGundam(payload);
